@@ -1,5 +1,7 @@
 package starter;
 import display.Display;
+import states.GameState;
+import states.State;
 
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics;
@@ -9,10 +11,12 @@ public class Game implements Runnable{
     private BufferStrategy buffStrat;
     private Graphics g;
     private Display display;
+    private Handler handler;
     private int width, height;
     private String title;
     private boolean running = false;
     public Thread thread;
+    private GameState gs;
 
     // To do: add state
 
@@ -25,12 +29,16 @@ public class Game implements Runnable{
     }
 
     public void init(){
-        // TODO: make handler,keymanager, set state
+        // TODO: make keymanager
         display = new Display(title, width, height);
+        handler = new Handler(this);
+        gs = new GameState(handler);
+        State.setState(gs);
     }
 
     public void tick(){
         // TODO: tick state and tick keymanager
+        State.getState().tick();
     }
 
 
@@ -45,7 +53,7 @@ public class Game implements Runnable{
         if(buffStrat == null){
             display.getCanvas().createBufferStrategy(2);
             // generally this is 2 or 3
-            return;
+            return;git
         }
 
     // to make:
@@ -53,6 +61,9 @@ public class Game implements Runnable{
         g = buffStrat.getDrawGraphics(); // Gets the graphics object to paint on the canvas with
         g.clearRect(0,0, width, height); // must be called before anything is drawn
 
+        if(State.getState() != null){
+            State.getState().render(g); // calls the rendering of the state with the graphics object
+        }
         //if(State.getState() != null){
          //   State.getState().render(g); // calls the rendering of the state with the graphics object
         ///}
@@ -129,5 +140,14 @@ public class Game implements Runnable{
             return;
         }
     }
+
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
+    }
+
 
 }
