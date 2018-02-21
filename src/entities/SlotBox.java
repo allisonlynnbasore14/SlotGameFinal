@@ -21,6 +21,7 @@ public class SlotBox extends Entity{
     public void render(Graphics g){
         g.setColor(color);
         g.drawRect((int)x,(int)y,BOXWIDTH, BOXHEIGHT);
+        g.drawString(String.valueOf(handler.getJackpot()), 10, 100);
     }
 
 }

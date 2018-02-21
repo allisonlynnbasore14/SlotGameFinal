@@ -7,6 +7,9 @@ import states.State;
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Game implements Runnable{
     private BufferStrategy buffStrat;
@@ -19,12 +22,15 @@ public class Game implements Runnable{
     public Thread thread;
     private GameState gs;
     private GameMech gm;
+    private int balance;
+    private int winnings;
+    private int bet;
+    private int jackpot;
 
     // To do: add state
 
 
     public Game(String title, int width, int height){
-        System.out.println("this is the game");
         this.width = width;
         this.height = height;
         this.title = title;
@@ -42,6 +48,22 @@ public class Game implements Runnable{
     public void tick(){
         // TODO: tick state and tick keymanager
         State.getState().tick();
+        String input = "";
+        if(!isMechRunning()){
+            System.out.println("Do you want to play again? Y/N");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+            try{
+                input = reader.readLine();
+            }
+            catch(IOException ex){
+                System.out.println (ex.toString());
+                System.out.println("Can you say that again? ");
+            }
+        }
+        if(input == "Y"){
+            gm.setRunning(true);
+        }
         gm.tick();
     }
 
@@ -66,6 +88,7 @@ public class Game implements Runnable{
         g.clearRect(0,0, width, height); // must be called before anything is drawn
 
         if(State.getState() != null){
+
             State.getState().render(g); // calls the rendering of the state with the graphics object
         }
         //if(State.getState() != null){
@@ -78,6 +101,8 @@ public class Game implements Runnable{
 
         buffStrat.show();
         g.dispose();
+
+
     }
 
     public void run(){
@@ -155,6 +180,46 @@ public class Game implements Runnable{
 
     public boolean isRunning(){
         return running;
+    }
+
+    public void setBalance(int b){
+        balance = b;
+    }
+
+    public void setBet(int b){
+        bet = b;
+    }
+
+    public void setWinnings(int b){
+        winnings = b;
+    }
+
+    public int getWinnings(){
+        return winnings;
+    }
+
+    public int getBet(){
+        return bet;
+    }
+
+    public int getBalance(){
+        return balance;
+    }
+
+    public int getJackpot(){
+        return jackpot;
+    }
+
+    public void setJackpot(int j){
+        jackpot = j;
+    }
+
+    public void setMechRunning(boolean j){
+        gm.setRunning(j);
+    }
+
+    public boolean isMechRunning(){
+        return gm.isRunning();
     }
 
 

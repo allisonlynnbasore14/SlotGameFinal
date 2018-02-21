@@ -30,4 +30,36 @@ public class Handler {
         this.game = game;
     }
 
+    public void setBalance(int balance){
+        game.setBalance(balance);
+    }
+
+    public void setBet(int bet){
+        game.setBet(bet);
+    }
+
+    public void setWinnings(int winnings){
+        game.setWinnings(winnings);
+    }
+
+    public int getBet(){
+        return game.getBet();
+    }
+
+    public int getBalance(){
+        return game.getBalance();
+    }
+
+    public int getWinnings(){
+        return game.getWinnings();
+    }
+
+    public int getJackpot(){
+        return game.getJackpot();
+    }
+
+    public void setJackpot(int j){
+        game.setJackpot(j);
+    }
+
 }

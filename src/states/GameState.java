@@ -11,7 +11,6 @@ public class GameState extends State{
     public GameState(Handler handler){
         super(handler); // getting it from the state class
         firstBox = new SlotBox(handler, 100, 100,"CIIk", Color.BLUE);
-        System.out.println("Made it to the game state");
 
     }
 
