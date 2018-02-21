@@ -1,5 +1,6 @@
 package starter;
 import display.Display;
+import gameMech.GameMech;
 import states.GameState;
 import states.State;
 
@@ -17,6 +18,7 @@ public class Game implements Runnable{
     private boolean running = false;
     public Thread thread;
     private GameState gs;
+    private GameMech gm;
 
     // To do: add state
 
@@ -33,12 +35,14 @@ public class Game implements Runnable{
         display = new Display(title, width, height);
         handler = new Handler(this);
         gs = new GameState(handler);
+        gm = new GameMech(handler);
         State.setState(gs);
     }
 
     public void tick(){
         // TODO: tick state and tick keymanager
         State.getState().tick();
+        gm.tick();
     }
 
 
@@ -53,7 +57,7 @@ public class Game implements Runnable{
         if(buffStrat == null){
             display.getCanvas().createBufferStrategy(2);
             // generally this is 2 or 3
-            return;git
+            return;
         }
 
     // to make:
@@ -147,6 +151,10 @@ public class Game implements Runnable{
 
     public int getHeight(){
         return height;
+    }
+
+    public boolean isRunning(){
+        return running;
     }
 
 

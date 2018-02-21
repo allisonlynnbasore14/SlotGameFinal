@@ -14,6 +14,10 @@ public class Handler {
         return game.getWidth();
     }
 
+    public boolean isRunning(){
+        return game.isRunning();
+    }
+
     public int getHeight(){
         return game.getHeight();
     }

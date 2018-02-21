@@ -1,28 +1,31 @@
 package states;
 
+import entities.SlotBox;
 import starter.Handler;
 
 import java.awt.*;
 
 public class GameState extends State{
 
+    SlotBox firstBox;
     public GameState(Handler handler){
         super(handler); // getting it from the state class
-
+        firstBox = new SlotBox(handler, 100, 100,"CIIk", Color.BLUE);
         System.out.println("Made it to the game state");
 
     }
 
     public void tick(){
         // object.tick();
+        firstBox.tick();
     }
 
 
     public void render(Graphics g){
         // object.render(g);
+        firstBox.render(g);
 
-        g.setColor(Color.RED);
-        g.drawLine(20, 100,120, 100);
+
     }
 
 }
